@@ -1,22 +1,22 @@
 from flask import Flask
 import os
-import psycopg2
+import pymysql
 
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def index():
     try:
-        conn = psycopg2.connect(
-            dbname=os.getenv("POSTGRESQL_ADDON_DB"),
-            user=os.getenv("POSTGRESQL_ADDON_USER"),
-            password=os.getenv("POSTGRESQL_ADDON_PASSWORD"),
-            host=os.getenv("POSTGRESQL_ADDON_HOST"),
-            port=os.getenv("POSTGRESQL_ADDON_PORT")
+        conn = pymysql.connect(
+            host=os.environ['MYSQL_ADDON_HOST'],
+            port=int(os.environ['MYSQL_ADDON_PORT']),
+            user=os.environ['MYSQL_ADDON_USER'],
+            password=os.environ['MYSQL_ADDON_PASSWORD'],
+            database=os.environ['MYSQL_ADDON_DB']
         )
-        return "Connexion à PostgreSQL réussie !"
+        return "✅ Connexion MySQL réussie"
     except Exception as e:
-        return f"Erreur : {e}"
+        return f"❌ Erreur MySQL : {e}"
 
 if __name__ == "__main__":
     app.run()
