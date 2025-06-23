@@ -17,6 +17,3 @@ def index():
         return "✅ Connexion MySQL réussie"
     except Exception as e:
         return f"❌ Erreur MySQL : {e}"
-
-if __name__ == "__main__":
-    app.run()
